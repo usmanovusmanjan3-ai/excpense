@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker — Xarajatlar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="background-line line-1"></div>
+<div class="background-line line-2"></div>
+<div class="background-line line-3"></div>
+
+<header class="header">
+    <div class="logo">
+        <span>₿</span> EXPENSE<span>TRACKER</span>
+    </div>
+
+    <nav>
+        <a href="#home">Bosh sahifa</a>
+        <a href="#expenses">Xarajatlar</a>
+        <a href="#analytics">Tahlil</a>
+    </nav>
+</header>
+
+<main>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-text">
+            <p class="small-title">SHAXSIY MOLIYA</p>
+
+            <h1>
+                Xarajatlaringizni
+                <strong>nazorat qiling.</strong>
+            </h1>
+
+            <p class="description">
+                Kundalik xarajatlaringizni yozib boring,
+                tahlil qiling va pulingiz qayerga ketayotganini
+                aniq biling.
+            </p>
+
+            <button class="gold-btn" onclick="openModal()">
+                + Xarajat qo‘shish
+            </button>
+        </div>
+
+        <div class="hero-card">
+            <div class="card-top">
+                <span>Jami xarajat</span>
+                <span class="icon">₿</span>
+            </div>
+
+            <h2 id="heroTotal">0 so‘m</h2>
+
+            <div class="mini-line"></div>
+
+            <div class="hero-bottom">
+                <span>Bugungi xarajat</span>
+                <strong id="heroToday">0 so‘m</strong>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- STATISTICS -->
+    <section class="stats">
+
+        <div class="stat-card">
+            <div class="stat-icon">💸</div>
+            <div>
+                <p>Jami xarajat</p>
+                <h3 id="totalExpense">0 so‘m</h3>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">📅</div>
+            <div>
+                <p>Bugungi xarajat</p>
+                <h3 id="todayExpense">0 so‘m</h3>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">📆</div>
+            <div>
+                <p>Oylik xarajat</p>
+                <h3 id="monthExpense">0 so‘m</h3>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">🧾</div>
+            <div>
+                <p>Xarajatlar soni</p>
+                <h3 id="expenseCount">0 ta</h3>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- EXPENSES -->
+    <section class="expenses-section" id="expenses">
+
+        <div class="section-header">
+            <div>
+                <p class="small-title">TRANZAKSIYALAR</p>
+                <h2>Xarajatlar tarixi</h2>
+            </div>
+
+            <button class="gold-btn small" onclick="openModal()">
+                + Xarajat qo‘shish
+            </button>
+        </div>
+
+        <div class="toolbar">
+
+            <div class="search-box">
+                🔎
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Xarajat qidirish..."
+                >
+            </div>
+
+            <select id="categoryFilter">
+                <option value="all">Barcha kategoriyalar</option>
+                <option value="Oziq-ovqat">Oziq-ovqat</option>
+                <option value="Uy-joy">Uy-joy</option>
+                <option value="Transport">Transport</option>
+                <option value="Xaridlar">Xaridlar</option>
+                <option value="Ta’lim">Ta’lim</option>
+                <option value="Sog‘liq">Sog‘liq</option>
+                <option value="Ko‘ngilochar">Ko‘ngilochar</option>
+                <option value="Kommunal">Kommunal</option>
+                <option value="Aloqa">Aloqa / Internet</option>
+                <option value="Boshqa">Boshqa</option>
+            </select>
+
+        </div>
+
+        <div class="expense-list" id="expenseList"></div>
+
+        <div class="empty" id="emptyMessage">
+            <div>💸</div>
+            <h3>Xarajatlar mavjud emas</h3>
+            <p>Birinchi xarajatingizni qo‘shing.</p>
+        </div>
+
+    </section>
+
+
+    <!-- ANALYTICS -->
+    <section class="analytics" id="analytics">
+
+        <div class="section-header">
+            <div>
+                <p class="small-title">STATISTIKA</p>
+                <h2>Kategoriya bo‘yicha tahlil</h2>
+            </div>
+        </div>
+
+        <div class="analytics-grid" id="analyticsGrid"></div>
+
+    </section>
+
+</main>
+
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+
+    <div class="modal">
+
+        <button class="close-btn" onclick="closeModal()">×</button>
+
+        <p class="small-title">YANGI XARAJAT</p>
+
+        <h2>Xarajat qo‘shish</h2>
+
+        <form id="expenseForm">
+
+            <label>
+                Xarajat nomi
+                <input
+                    type="text"
+                    id="expenseName"
+                    placeholder="Masalan: Tushlik"
+                    required
+                >
+            </label>
+
+            <label>
+                Summa
+                <div class="amount-input">
+                    <input
+                        type="number"
+                        id="expenseAmount"
+                        placeholder="50000"
+                        min="1"
+                        required
+                    >
+                    <span>so‘m</span>
+                </div>
+            </label>
+
+            <label>
+                Kategoriya
+                <select id="expenseCategory" required>
+                    <option value="">Kategoriya tanlang</option>
+                    <option value="Oziq-ovqat">Oziq-ovqat</option>
+                    <option value="Uy-joy">Uy-joy</option>
+                    <option value="Transport">Transport</option>
+                    <option value="Xaridlar">Xaridlar</option>
+                    <option value="Ta’lim">Ta’lim</option>
+                    <option value="Sog‘liq">Sog‘liq</option>
+                    <option value="Ko‘ngilochar">Ko‘ngilochar</option>
+                    <option value="Kommunal">Kommunal</option>
+                    <option value="Aloqa">Aloqa / Internet</option>
+                    <option value="Boshqa">Boshqa</option>
+                </select>
+            </label>
+
+            <label>
+                Sana
+                <input
+                    type="date"
+                    id="expenseDate"
+                    required
+                >
+            </label>
+
+            <label>
+                Izoh
+                <textarea
+                    id="expenseNote"
+                    placeholder="Qo‘shimcha ma’lumot..."
+                ></textarea>
+            </label>
+
+            <button class="submit-btn" type="submit">
+                Xarajatni saqlash
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<footer>
+    <div>
+        <strong>EXPENSE TRACKER</strong>
+        <p>Shaxsiy xarajatlaringizni aqlli boshqaring.</p>
+    </div>
+
+    <p>© 2026 Barcha huquqlar himoyalangan.</p>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
